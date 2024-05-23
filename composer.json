@@ -9,16 +9,16 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/doctrine-bundle": "^2.12",
+        "doctrine/doctrine-migrations-bundle": "^3.3",
+        "doctrine/orm": "^3.1",
+        "nelmio/api-doc-bundle": "^4.26",
         "symfony/console": "6.4.*",
         "symfony/dotenv": "6.4.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.4.*",
         "symfony/runtime": "6.4.*",
         "symfony/yaml": "6.4.*"
-    },
-    "require-dev": {
-        "phpstan/phpstan": "*",
-        "phpunit/phpunit": "*"
     },
     "config": {
         "allow-plugins": {
@@ -57,6 +57,16 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "ecs": "@php vendor/bin/ecs check",
+        "ecs:fix": "@php vendor/bin/ecs check --fix",
+        "stan": "@php vendor/bin/phpstan analyse",
+        "phpunit": "vendor/bin/phpunit",
+
+        "cs": [
+            "@ecs",
+            "@stan",
+            "@phpunit"
         ]
     },
     "conflict": {
@@ -65,7 +75,15 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "6.4.*"
+            "require": "6.4.*",
+            "docker": true
         }
+    },
+    "require-dev": {
+        "dama/doctrine-test-bundle": "^8.1",
+        "phpstan/phpstan": "1.10.*",
+        "phpunit/phpunit": "^11.1",
+        "symfony/maker-bundle": "^1.59",
+        "symplify/easy-coding-standard": "^12.1.11"
     }
 }
