@@ -8,7 +8,6 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-    restart: unless-stopped
     volumes:
       - database:/var/lib/mysql:delegated
     ports:
@@ -17,7 +16,6 @@ services:
     image: adminer
     ports:
       - "${ADMINER_PORT}:8080"
-    restart: unless-stopped
     depends_on:
       - db
   backend:
@@ -30,7 +28,6 @@ services:
       FIRST_RUN: ${FIRST_RUN:-0}
       XDEBUG_CONFIG: ${XDEBUG_IDE}
     command: ["symfony", "server:start", "--no-tls"]
-    restart: on-failure:2
     volumes:
       - ../:/var/www
     ports:
