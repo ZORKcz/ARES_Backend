@@ -1,0 +1,13 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Ares
+            description: Interactive API documentation.
+            version: 1.0.
+
+        tags:
+            - name: "Company"
+    areas: # to filter documented areas
+        path_patterns:
+            - ^/api(?!/doc$) # Excludes routes under /api/pickup
+

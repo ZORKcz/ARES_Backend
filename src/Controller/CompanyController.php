@@ -2,60 +2,72 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use App\Service\CompanyService;
-use http\Env\Request;
+use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
-use OpenApi\Attributes as OA;
 
-#[Route('/company', name: 'get_company_')]
+#[Route('/api/company', name: 'get_company_')]
 class CompanyController extends AbstractController
 {
-
     public function __construct(
         private readonly CompanyService $companyService
-    )
-    {
+    ) {
     }
 
-    #[OA\Get(
+    #[OA\Post(
         summary: 'get company by ICO',
-        tags: ['Company'],
-        parameters: [
-            new OA\QueryParameter(
-                name: 'ico',
-                description: 'Identifikační číslo občana',
-                required: true,
-                schema: new OA\Schema(type: 'string')
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                schema: 'array',
+                example: [
+                    'ico' => 12345678,
+                ]
             )
-        ],
+        ),
+        tags: ['Company'],
         responses: [
             new OA\Response(
                 response: 200,
-                description: 'Returns the rewards of an user',
+                description: 'Returns data',
                 content: new OA\JsonContent(
-                    type: 'array',
-                )
-            )
+                    schema: 'array',
+                    example: [
+                        'ico' => 12345678,
+                        'name' => 'Company name',
+                        'address' => 'Company address',
+                    ]
+                ),
+            ),
         ]
     )]
-    #[Route('/ico', name: 'ico', methods: ['GET'])]
-    public function getCompanyInfo(string $ico): JsonResponse
+    #[Route('/ico', name: 'ico', methods: ['POST'])]
+    public function getCompanyInfo(Request $request): JsonResponse
     {
-        try
-        {
-            $company = $this->companyService->getCompanyInfo($ico);
-
-            if (!$company)
-            {
-                return $this->json(['error' => 'Company not found'], 404);
-            }
-            return $this->json($company);
+        $content = $request->getContent();
+        if (!$content) {
+            return $this->json([
+                'error' => 'Missing ICO',
+            ], 400);
         }
-        catch (\Exception $e)
-        {
-            return $this->json(['error' => $e->getMessage()], 500);
+
+        try {
+            $company = $this->companyService->getCompanyInfo(json_decode($content['ico'], true));
+
+            if (!$company) {
+                return $this->json([
+                    'error' => 'Company not found',
+                ], 404);
+            }
+
+            return $this->json($company);
+        } catch (\Exception $e) {
+            return $this->json([
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
 }

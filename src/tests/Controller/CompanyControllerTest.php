@@ -3,16 +3,16 @@
 namespace App\tests\Controller;
 
 use App\Entity\Company;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class CompanyControllerTest extends WebTestCase
 {
-    const EXPECTED_RETURN_KEYS = ['ico', 'name', 'addressCity', 'addressStreet', 'addressHousenumber', 'addressPostalCode',
+    public const EXPECTED_RETURN_KEYS = ['ico', 'name', 'addressCity', 'addressStreet', 'addressHousenumber', 'addressPostalCode',
         'addressCounty'];
-    const EXPECTED_RETURN_VALUES = ['61679992', 'Proof & Reason, s.r.o.', 'Hořice', 'Kollárova', '703', '50801',
+    public const EXPECTED_RETURN_VALUES = ['61679992', 'Proof & Reason, s.r.o.', 'Hořice', 'Kollárova', '703', '50801',
         'Královéhradecký kraj'];
+
     public function testGetCompanyByICValid()
     {
         $client = static::createClient();
@@ -24,8 +24,7 @@ class CompanyControllerTest extends WebTestCase
         $responseContent = $client->getResponse()->getContent();
         $responseData = json_decode($responseContent, true);
 
-        foreach($this::EXPECTED_RETURN_KEYS as $index => $key)
-        {
+        foreach ($this::EXPECTED_RETURN_KEYS as $index => $key) {
             $this->assertArrayHasKey($key, $responseData);
             $this->assertEquals($this::EXPECTED_RETURN_VALUES[$index], $responseData[$key]);
         }
@@ -55,11 +54,12 @@ class CompanyControllerTest extends WebTestCase
         $container = $client->getContainer();
         $entityManager = $container->get('doctrine')->getManager();
         $companyRepository = $entityManager->getRepository(Company::class);
-        $company = $companyRepository->findOneBy(['ico' => $ico]);
+        $company = $companyRepository->findOneBy([
+            'ico' => $ico,
+        ]);
 
         return $company != null;
     }
 
-    /*Přidej sem ještě zbytek funkcí a popiš k nim, co dělají*/
-
+    /* Přidej sem ještě zbytek funkcí a popiš k nim, co dělají */
 }

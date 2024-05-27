@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use App\GiftServices\Entity\Traits\CreatedAt;
-use App\GiftServices\Entity\Traits\DeletedAt;
-use App\GiftServices\Entity\Traits\UpdatedAt;
+use App\Entity\Traits\CreatedAt;
+use App\Entity\Traits\DeletedAt;
+use App\Entity\Traits\UpdatedAt;
 use App\Repository\CompanyRepository;
 use Doctrine\ORM\Mapping as ORM;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GiftServices\Entity\Traits;
+namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
