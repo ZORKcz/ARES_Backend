@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use App\Service\CompanyService;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/company', name: 'get_company_')]
@@ -47,6 +47,9 @@ class CompanyController extends AbstractController
     #[Route('/ico', name: 'ico', methods: ['POST'])]
     public function getCompanyInfo(Request $request): JsonResponse
     {
+        return $this->json([
+            'status' => 'ok',
+        ]);
         $content = $request->getContent();
         if (!$content) {
             return $this->json([

@@ -6,7 +6,7 @@ use _PHPStan_7961f7ae1\Nette\Neon\Exception;
 use App\Entity\Company;
 use App\Repository\CompanyRepository;
 use Doctrine\ORM\EntityManagerInterface;
-//use h4kuna\Ares\Ares;
+// use h4kuna\Ares\Ares;
 use h4kuna\Ares\Exceptions\IdentificationNumberNotFoundException;
 
 class CompanyService
@@ -14,7 +14,7 @@ class CompanyService
     public function __construct(
         private EntityManagerInterface $entityManager,
         private CompanyRepository $companyRepository,
-//        private Ares $ares
+        //        private Ares $ares
     ) {
     }
 
@@ -46,12 +46,12 @@ class CompanyService
 
         $company = new Company();
         $company->setIco($ico);
-//        $company->setName($aresData->getCompanyName());
-//        $company->setAddressStreet($aresData->getStreet());
-//        $company->setAddressHousenumber($aresData->getStreetNumber());
-//        $company->setAddressCity($aresData->getTown());
-//        $company->setAddressPostalCode($aresData->getZip());
-//        $company->setAddressCounty($aresData->getDistrict());
+        //        $company->setName($aresData->getCompanyName());
+        //        $company->setAddressStreet($aresData->getStreet());
+        //        $company->setAddressHousenumber($aresData->getStreetNumber());
+        //        $company->setAddressCity($aresData->getTown());
+        //        $company->setAddressPostalCode($aresData->getZip());
+        //        $company->setAddressCounty($aresData->getDistrict());
 
         return $company;
     }
