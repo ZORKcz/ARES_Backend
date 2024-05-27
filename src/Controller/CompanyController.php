@@ -6,7 +6,6 @@ use App\Service\CompanyService;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/company', name: 'get_company_')]
@@ -19,16 +18,11 @@ class CompanyController extends AbstractController
 
     #[OA\Post(
         summary: 'get company by ICO',
-        requestBody: new OA\RequestBody(
-            required: true,
-            content: new OA\JsonContent(
-                schema: 'array',
-                example: [
-                    'ico' => 12345678,
-                ]
-            )
-        ),
         tags: ['Company'],
+        parameters: [new OA\PathParameter(
+            name: 'ico',
+            description: 'LFG ICO'
+        )],
         responses: [
             new OA\Response(
                 response: 200,
@@ -44,21 +38,11 @@ class CompanyController extends AbstractController
             ),
         ]
     )]
-    #[Route('/ico', name: 'ico', methods: ['POST'])]
-    public function getCompanyInfo(Request $request): JsonResponse
+    #[Route('/{ico}', name: 'ico', methods: ['GET'])]
+    public function getCompanyInfo(int $ico): JsonResponse
     {
-        return $this->json([
-            'status' => 'ok',
-        ]);
-        $content = $request->getContent();
-        if (!$content) {
-            return $this->json([
-                'error' => 'Missing ICO',
-            ], 400);
-        }
-
         try {
-            $company = $this->companyService->getCompanyInfo(json_decode($content['ico'], true));
+            $company = $this->companyService->getCompanyInfoByIco($ico);
 
             if (!$company) {
                 return $this->json([

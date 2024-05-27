@@ -15,3 +15,9 @@ doctrine:
         dir: '%kernel.project_dir%/src/Entity'
         prefix: 'App\Entity'
         alias: App
+    dql:
+      string_functions:
+        json_contains: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonContains
+      numeric_functions:
+        convert_money_to_int: App\DQL\ConvertMoneyToInt
+    enable_lazy_ghost_objects: true
