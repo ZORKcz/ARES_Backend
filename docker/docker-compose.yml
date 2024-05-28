@@ -22,14 +22,14 @@ services:
     build:
       context: ..
       dockerfile: docker/backend/Dockerfile
-      target: base
+      target: dev
     environment:
       DATABASE_URL: mysql://${DB_USER}:${DB_PASSWORD}@db:3306/${DB_NAME}?serverVersion=mariadb-10.6.16
       FIRST_RUN: ${FIRST_RUN:-0}
       XDEBUG_CONFIG: ${XDEBUG_IDE}
     command: ["symfony", "server:start", "--no-tls"]
     volumes:
-      - ../:/var/www
+      - ../src:/var/www/src
     ports:
       - "${BACKEND_PORT}:8000"
     depends_on:

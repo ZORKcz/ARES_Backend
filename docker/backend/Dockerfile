@@ -24,14 +24,17 @@ RUN mkdir /.symfony5 && chmod -R 777 /.symfony5
 COPY config/preload.php /var/www/config/preload.php
 RUN docker-php-ext-install pdo pdo_mysql opcache intl
 
+# Copy project files. Leads to bigger image size, but improves performance.
+COPY . /var/www
+
 FROM base as dev
 
-COPY docker/backend/config/memory-limit.ini /usr/local/etc/php/conf.d/
+COPY docker/backend/config/memory_limit.ini /usr/local/etc/php/conf.d/
 COPY docker/backend/config/opcache.ini /usr/local/etc/php/conf.d/
 
-COPY docker/backend/entrypoints/entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+COPY docker/backend/entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 ENV PHPSTAN_PRO_WEB_PORT=11111
 EXPOSE 11111
