@@ -25,19 +25,19 @@ class Company
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $addressCity = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $addressStreet = null;
 
-    #[ORM\Column(length: 10)]
+    #[ORM\Column(length: 10, nullable: true)]
     private ?string $addressHousenumber = null;
 
-    #[ORM\Column(length: 9)]
+    #[ORM\Column(length: 9, nullable: true)]
     private ?string $addressPostalCode = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $addressCounty = null;
 
     public function getId(): ?int

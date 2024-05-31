@@ -32,9 +32,9 @@ FROM base as dev
 COPY docker/backend/config/memory_limit.ini /usr/local/etc/php/conf.d/
 COPY docker/backend/config/opcache.ini /usr/local/etc/php/conf.d/
 
-COPY docker/backend/entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/entrypoint.sh
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+#COPY docker/backend/entrypoint.sh /usr/local/bin/
+#RUN chmod +x /usr/local/bin/entrypoint.sh
+#ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 ENV PHPSTAN_PRO_WEB_PORT=11111
 EXPOSE 11111

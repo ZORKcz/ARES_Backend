@@ -30,6 +30,7 @@ services:
     command: ["symfony", "server:start", "--no-tls"]
     volumes:
       - ../src:/var/www/src
+      - ../migrations:/var/www/migrations
     ports:
       - "${BACKEND_PORT}:8000"
     depends_on:

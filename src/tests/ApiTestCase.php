@@ -16,14 +16,16 @@ class ApiTestCase extends WebTestCase
         $this->client = static::createClient();
     }
 
-    public function requestAndGetResponseWithAssert(string $method, string $uri, string|false|null $content = null): Response
+    public function requestAndGetResponseWithAssert(string $method, string $uri, string|false|null $content = null, bool $expectedSuccess = true): Response
     {
         if ($content === false) {
             throw new \Exception('Failed to encode JSON');
         }
         $this->client->request(method: $method, uri: $uri, content: $content);
 
-        $this->assertResponseIsSuccessful();
+        if ($expectedSuccess === true) {
+            $this->assertResponseIsSuccessful();
+        }
 
         $response = $this->client->getResponse();
         $content = $response->getContent();

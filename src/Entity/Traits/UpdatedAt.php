@@ -12,6 +12,6 @@ trait UpdatedAt
     #[ORM\PreUpdate]
     public function setUpdatedAt(): void
     {
-        $this->updatedAt = new \DateTimeImmutable('now');
+        $this->updatedAt = new \DateTimeImmutable();
     }
 }

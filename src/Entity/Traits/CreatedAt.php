@@ -12,6 +12,6 @@ trait CreatedAt
     #[ORM\PrePersist]
     public function setCreatedAt(): void
     {
-        $this->createdAt = new \DateTimeImmutable('now');
+        $this->createdAt = new \DateTimeImmutable();
     }
 }
